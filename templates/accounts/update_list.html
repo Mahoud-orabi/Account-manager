@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{list.name}}
+{% endblock  %}
+
+{%block header%}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}"class='text-decoration-none' >Boards</a></li>
+    <li class="breadcrumb-item "><a href="{% url 'client' list.category.client.slug  %}"class='text-decoration-none' >{{list.category.client.f_name| capfirst}}</a></li>
+    <li class="breadcrumb-item "><a href="{% url 'category_details' list.category.client.slug list.category.id  %}"class='text-decoration-none' >{{ list.category.name | capfirst}}</a></li>
+      <li class="breadcrumb-item active">{{list.name}}</li>
+{% endblock %}
+
+{%block body%}
+
+  {% comment %} first form {% endcomment %}
+  <form method="POST" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+  {% comment %} end form {% endcomment %}
+  
+
+
+{% endblock %}

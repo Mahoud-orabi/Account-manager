@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add Client
+{% endblock  %}
+
+{%block header%}
+  <li class="breadcrumb-item "><a class='text-decoration-none' href="{% url 'hello' %}">First Page</a></li>
+  <li class="breadcrumb-item "><a class='text-decoration-none' href="{% url 'person' %}">Persons</a></li>
+      <li class="breadcrumb-item active">Add New Person</li>
+{% endblock %}
+
+{%block body%}
+
+  {% comment %} first form {% endcomment %}
+  <form  method="POST" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+  {% comment %} end form {% endcomment %}
+  
+
+
+{% endblock %}

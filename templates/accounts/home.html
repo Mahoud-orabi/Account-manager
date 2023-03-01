@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Clients
+{% endblock title %}
+
+
+{% block header %}
+	<li class="breadcrumb-item active ">Clients</li>
+{% endblock header %}
+	
+
+{% block body %}
+
+<a class="btn btn-primary text-decoration-none" href="{% url 'add_client' %}" role="button">Add Client</a>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>Clients</th>
+      <th>Category</th>
+      <th>Last Category</th>
+      <th>Created_by</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for client in clients %}
+      <tr>
+        <td><a class='text-decoration-none' href="{% url 'client' client.slug %}">{{client.f_name |title}} {{client.l_name| title}}</a>
+          <small class="text-muted d-block"></small>
+        </td>
+        <td>{{client.category.count}}</td>
+        <td>
+        {% comment %} {{client.category.last.created_dt}} {% endcomment %}
+          {% with client.get_last_category as clien %}
+            {% if clien %}
+            at {{clien.created_dt}}
+            {% else %}
+            <small>
+              No Category her
+            </small>
+            {% endif %}
+          {% endwith %}
+        </td>
+        <td>{{client.created_by}}</td>
+        <td><a class='btn btn-primary' href="{% url 'delete_client' client.slug %}">Delete</a></td>
+      </tr>
+    {% endfor %}
+      
+  </tbody>
+</table>
+{% endblock body %}
+
+

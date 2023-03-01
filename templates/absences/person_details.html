@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+  
+  {% block title %}
+  	Details 
+  {% endblock  %}
+
+  {%block header%}
+  <li class="breadcrumb-item active "><a  class='text-decoration-none'  href="{% url 'hello' %}">First Page</a></li>
+  <li class="breadcrumb-item "><a class='text-decoration-none' href="{% url 'person' %}">Persons</a></li>
+  <li class="breadcrumb-item ">{{details.f_name}}</li>
+  {% endblock %}
+
+  {%block body%}
+
+  <a href="{% url 'add_details' details.slug %}" class="btn btn-primary">Add Details</a>
+
+
+  <table class="table ">
+    <thead class=" thead-dark">
+      <tr>
+        <th class='text-start'>Day</th>
+        <th class='text-center'>Created_date</th>
+        <th class='text-center'>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for day in day %}
+        <tr>
+          <td>{{day.absences}} </td>
+          <td class='text-center'>{{day.date}}</td>
+          <td class='text-center'><a class='btn btn-primary' href="{% url 'update_details' details.slug day.id %}">edit</a>
+                                  <a class='btn btn-primary' href="{% url 'delete_details' details.slug day.id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+        
+    </tbody>
+  </table>
+{% endblock %}

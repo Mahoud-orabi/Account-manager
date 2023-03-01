@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+  
+  {% block title %}
+    {{clients.f_name | title}} Details 
+  {% endblock  %}
+
+  {%block header%}
+  <li class="breadcrumb-item active "><a href="{% url 'home' %}" class='text-decoration-none' >Clients</a></li>
+  <li class="breadcrumb-item ">{{clients.f_name | title}} Detail</li>
+  {% endblock %}
+
+  {%block body%}
+
+  <a href="{% url 'add_new_category' clients.slug %}" class="btn btn-primary">Add new Category</a>
+
+  <table class="table ">
+    <thead class=" thead-dark">
+      <tr>
+        <th>Categories</th>
+        <th>Create by</th>
+        <th>Count</th>
+        <th>Created dt</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% comment %}         topics => related_name in models   {% endcomment %}
+      {% for category in category %}
+        <tr>
+          <td><a class='text-decoration-none' href="{% url 'category_details' clients.slug  category.id%}">{{category.name}}</a></td>
+          <td>{{category.created_by}}</td>
+          <td>{{category.item_number}}</td>
+          <td>{{category.created_dt|date:'d m Y'}}
+            <div>{{category.created_dt|date:'h:i a'}}</div>
+          </td>
+          <td><a class='btn btn-primary' href="{% url 'delete_category' clients.slug  category.id %}">Delete</a></td>
+        </tr>
+      {% endfor %}
+        
+    </tbody>
+  </table>
+{% comment %} {% if category.has_other_pages %}
+  <nav aria-label="Topics pagination" class="mb-4">
+    <ul class="pagination">
+      {% if category.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="">Previous</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+      {% endif %}
+
+      {% for page_num in category.paginator.page_range %}
+        {% if topics.number == page_num %}
+          <li class="page-item active">
+            <span class="page-link">
+              {{ page_num }}
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="">{{ page_num }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if topics.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %} {% endcomment %}
+{% endblock %}

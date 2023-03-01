@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+  {% block title %}
+		Stores
+  {% endblock  %}
+
+  {%block header%}
+  <li class="breadcrumb-item  ">First Page /</li>
+  {% endblock %}
+
+{%block body%}
+<h1 class='text-center'>Welcom In My Web Site</h1>
+{% if user.is_authenticated%}
+	<h3>Go to  <a class='text-decoration-none' href="{% url 'home' %}">Accounts</a></h3>
+	<h3>Go to  <a class='text-decoration-none' href="{% url 'stores' %}">Stores</a></h3>
+	<h3>Go to  <a class='text-decoration-none' href="{% url 'person' %}">Absences</a></h3>
+{%else%}
+	<div class='container text-center mt-5 p-5'>
+		<a class='btn btn-primary btn-block m-3' href="{% url 'signup' %}">Signup</a>
+		<a class='btn btn-primary btn-block' href="{% url 'login' %}">Login</a>
+	</div>
+{%endif%}
+{% endblock %}

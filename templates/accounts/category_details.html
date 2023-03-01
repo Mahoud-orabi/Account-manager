@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+  
+  {% block title %}
+    {{clients.f_name | title}} Details 
+  {% endblock  %}
+
+  {%block header%}
+  <li class="breadcrumb-item active"><a href="{% url 'home' %}" class='text-decoration-none' >Clients</a></li>
+  <li class="breadcrumb-item "><a href="{% url 'client' clients.slug %}" class='text-decoration-none' >{{clients.f_name | title}} Detail</a> </li>
+  <li class="breadcrumb-item ">{{category.name}}</li>
+  {% endblock %}
+
+  {%block body%}
+
+  <a href="{% url 'add_list' clients.slug category.id %}" class="btn btn-primary">Add new Details</a>
+  <div class='text-center'>{{list.get_all_time}}</div>
+
+  <table class="table ">
+    <thead class=" thead-dark">
+      <tr>
+        <th class='text-start'>Name</th>
+        <th class='text-center'>Count</th>
+        <th class='text-center'>Time</th>
+        <th class='text-center'>Number of motor</th>
+        <th class='text-center'>Created_date</th>
+        <th class='text-center'>Update_date</th>
+        <th class='text-center'>all_time</th>
+        <th class='text-center'>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% comment %}         topics => related_name in models   {% endcomment %}
+      {% for li in list %}
+        <tr>
+          <td>{{li.name}} </td>
+          <td class='text-center'>{{li.count}}</td>
+          <td class='text-center'>{{li.time}}</td>
+          <td class='text-center'>{{li.num_motor}}</td>
+          <td class='text-center'>{{li.created_dt}}</td>
+          <td class='text-center'>{{li.updated_dt}}</td>
+          {% comment %} <td class='text-center'>{{li.get_all_time}}</td> {% endcomment %}
+          <td class='text-center'><a class='btn btn-primary' href="{% url 'update_list' clients.slug category.id li.id %}">edit</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+  
+  {% block title %}
+		Stores
+  {% endblock  %}
+
+  {%block header%}
+  <li class="breadcrumb-item active "><a  class='text-decoration-none'  href="{% url 'hello' %}">First Page</a></li>
+  <li class="breadcrumb-item  ">Stores</li>
+  {% endblock %}
+
+  {%block body%}
+
+  <a href="{% url 'add_store' %}" class="btn btn-primary">Add new Store</a>
+
+  <table class="table ">
+    <thead class=" thead-dark">
+      <tr>
+        <th>Store</th>
+        <th>Created dt</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% comment %}         topics => related_name in models   {% endcomment %}
+      {% for store in store %}
+        <tr>
+          <td><a class='text-decoration-none' href="{% url 'store_details' store.slug %}">{{store.name}}</a></td>
+          <td>{{store.created_dt|date:'d m Y'}}
+            <div>{{store.created_dt|date:'h:i a'}}</div>
+          </td>
+          <td><a class='btn btn-primary' href="{% url 'delete_store' store.slug %}">Delete</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

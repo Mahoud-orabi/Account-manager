@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+  
+  {% block title %}
+  {{store.name}}
+  {% endblock  %}
+
+  {%block header%}
+  <li class="breadcrumb-item active "><a  class='text-decoration-none'  href="{% url 'hello' %}">First Page</a></li>
+  <li class="breadcrumb-item active "><a href="{% url 'stores' %}" class='text-decoration-none' >Stores</a></li>
+  <li class="breadcrumb-item  ">{{store.name}}</li>
+  {% endblock %}
+
+  {%block body%}
+
+  <a href="{% url 'add_details' store.slug %}" class="btn btn-primary">Add new Item</a>
+
+  <table class="table ">
+    <thead class=" thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Count</th>
+        <th>Created dt</th>
+        <th class='text-center'>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% comment %}         topics => related_name in models   {% endcomment %}
+      {% for item in category %}
+        <tr>
+          <td>{{item.name}}</td>
+          <td>{{item.count}}</td>
+          <td>{{item.created_dt|date:'d m Y'}}
+            <div>{{item.created_dt|date:'h:i a'}}</div>
+          </td>
+          <td class='text-center'><a class='btn btn-primary' href="{% url 'delete_details' store.slug  item.id %}">Delete</a>
+            <a class='btn btn-primary' href="{% url 'update_details' item.store.slug  item.id %}">Update</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
